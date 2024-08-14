@@ -33,4 +33,17 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+
+  has_many  :posts, class_name: "Post", foreign_key: "user_id", dependent: :destroy
+  has_many  :comments, class_name: "Comment", foreign_key: "user_id", dependent: :destroy
+  has_many  :comment_likes, class_name: "CommentLike", foreign_key: "user_id", dependent: :destroy
+  has_many  :post_likes, class_name: "PostLike", foreign_key: "user_id", dependent: :destroy
+
+  validates :username, presence: true
+  validates :username, uniqueness: true
+  validates :location, presence: true
+  validates :linkedin_profile, presence: true
+  validates :last_name, presence: true
+  validates :first_name, presence: true
 end
